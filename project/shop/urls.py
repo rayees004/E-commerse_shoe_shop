@@ -1,11 +1,13 @@
 
-from django.urls import path,include
+from django.urls import path
 from .import views
 
 
 
 urlpatterns = [
-    path('',views.home,name='home')
-    
+    path('',views.home,name='home'),
+    path('details/',views.details,name='details'),
+    path('<slug:c_slug>/', views.home, name='cat_pr'),
+
 ]
 
