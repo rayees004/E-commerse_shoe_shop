@@ -141,7 +141,7 @@
       </div>
     </div>
     <div class="row">
-        {% for i in pr %}
+        {% for i in pg %}
             
                 <div class="col-12 col-md-3 mt-4 m-2">
                     <div class="card text-bg-dark">
@@ -165,7 +165,10 @@
 
                 
             
-         </div>
+         </div><center>
+  {% for p in pg.paginator.page_range %}
+  <a href="?page={{ p }}" class="btn btn-light btn-sm  {% if pg.number == p %}active{% endif %} m-1">{{ p }}</a>
+  {% endfor %}</center>
   </div>
   
  {% endblock %}

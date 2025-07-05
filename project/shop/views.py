@@ -1,5 +1,6 @@
 from django.db.models import Q
 from django.shortcuts import render,get_object_or_404
+from django.core.paginator import Paginator,EmptyPage,InvalidPage
 
 
 from .models import *
@@ -17,7 +18,19 @@ def home(request,c_slug=None):
         pr = Product.objects.all().filter(available = True)
 
     cat = Category.objects.all()
-    return render(request,'index.html',{'pr':pr,'cat':cat})
+    paginator = Paginator(pr,2)
+    try:
+        page = int(request.GET.get('page','1'))
+    except:
+        page = 1
+    try:
+        pro = paginator.page(page)
+    except(EmptyPage,InvalidPage):
+        pro = paginator.page(paginator.num_pages)
+
+
+
+    return render(request,'index.html',{'pr':pr,'cat':cat,'pg':pro})
 
 def details(request,c_slug,p_slug):
 
