@@ -31,3 +31,5 @@ class Product(models.Model):
     available = models.BooleanField(default=False)
     price = models.IntegerField()
     CATEGORY = models.ForeignKey(Category,on_delete = models.CASCADE) #foreignkey
+    def get_url(self):
+        return reverse('details',args=[self.CATEGORY.slug,self.slug])

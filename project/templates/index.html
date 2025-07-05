@@ -151,7 +151,7 @@
                         <p class="card-text">{{ i.desc|truncatechars:25 }}</p>
                         <p class="card-text text-light">₹{{ i.price }}</p>
                         <p class="card-text text-light">left in : {{ i.stock }} stock</p>
-                        <a href="details/">
+                        <a href="{{ i.get_url }}">
                             <div class="btn btn-success">Details</div>
                         </a>
                     </div>

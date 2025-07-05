@@ -40,7 +40,7 @@
   </div>
   <!-- ***** Preloader End ***** -->
 
-  <!-- ***** Header Area Start ***** -->
+  <nav><!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky">
     <div class="container">
         <div class="row">
@@ -53,8 +53,9 @@
                     <!-- ***** Logo End ***** -->
                     <!-- ***** Search End ***** -->
                     <div class="search-input">
-                      <form id="search" action="#">
-                        <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
+                      <form id="search" action="{% url 'search' %}" method="get" enctype="multipart/form-data">
+
+                        <input type="text" placeholder="Type Something" id='searchText' name="q" onkeypress="handle" />
                         <i class="fa fa-search"></i>
                       </form>
                     </div>
@@ -75,7 +76,7 @@
             </div>
         </div>
     </div>
-  </header><br>
+  </header><br></nav>
   <!-- ***** Header Area End ***** -->
 
  {% block content %}

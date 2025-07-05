@@ -13,10 +13,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <div class="continer">
+    <div class="continer p-3" style="margin-top: 90px">
         <div class="row">
-            <div class="col-12 col-md-6">
-            <img  src="https://th.bing.com/th/id/OIP.v4mbTq6Q_8qVN5MYI8XOEgHaFG?rs=1&pid=ImgDetMain" class="col-12"  alt=""> 
+            <div class="col-12 col-md-6 " style="background-image: url('{{ de.img.url }}');
+            background-size: cover;
+            background-position: center;">
+{#            <img  src="{{ de.img.url }}" class="col-12"  alt="" style="height: inherit">#}
             <div class="col-md-row">
                 <div class="col-12  col-md-6 ">
                     <div class="row">
@@ -26,12 +28,12 @@
                 </div>
             </div>
             <div class="col-12 col-md-6 ">
-                    <div class="overflow-auto">
+                    <div class="text-light p-3">
   Abros <br>
-SYLVAIN Running Shoes For Men  (Black , 9) <br>
+{{ de.name }}<br>
 
 <div class="row mt-2">
-    <p class="col-2">₹957</p><p class="col-2"><del>₹1,999</del></p><p class="col-2">2% off</p>
+    <p class="col-2">₹{{ de.price }}</p><p class="col-2"><del>₹1,999</del></p><p class="col-2">2% off</p>
 </div>
 <div>
     available offers
@@ -56,7 +58,7 @@ Net Quantity - 1 <br>
         </div>
         </div>
     </div>
-  
+
 {% endblock %}
 {#</body>#}
 {#</html>#}
