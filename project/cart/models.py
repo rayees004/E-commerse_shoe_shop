@@ -13,6 +13,8 @@ class Item(models.Model):
     PRODUCT = models.ForeignKey(Product,on_delete=models.CASCADE)
     CART = models.ForeignKey(Cart,on_delete=models.CASCADE)
     quntity = models.IntegerField()
+    active = models.BooleanField(default=True)
     def _str_(self):
         return self.PRODUCT
+
 

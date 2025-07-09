@@ -1,64 +1,68 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
-{#    <title>Details</title>      #}
-{#    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">   #}
-{##}
-{##}
-{#</head>#}
-{##}
-{#<body>#}
+
 {% extends 'base.html' %}
 {% block content %}
-
-    <div class="continer p-3" style="margin-top: 90px">
-        <div class="row">
-            <div class="col-12 col-md-6 " style="background-image: url('{{ de.img.url }}');
-            background-size: cover;
-            background-position: center;">
-{#            <img  src="{{ de.img.url }}" class="col-12"  alt="" style="height: inherit">#}
-            <div class="col-md-row">
-                <div class="col-12  col-md-6 ">
-                    <div class="row">
-                        </div>
-                                    </div>
-                
-                </div>
+<style>
+@media (min-width: 768px) { /* Bootstrap's md breakpoint */
+    .sticky-md-top {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 110px; /* Adjust this value based on your navbar's height */
+        z-index: 1020; /* Ensures it stays on top */
+    }
+}
+</style>
+<div class="container p-3" style="margin-top: 90px;">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="sticky-md-top">
+                <img src="{{ de.img.url }}" class="img-fluid rounded" alt="{{ de.name }}">
             </div>
-            <div class="col-12 col-md-6 ">
-                    <div class="text-light p-3">
-  Abros <br>
-{{ de.name }}<br>
-
-<div class="row mt-2">
-    <p class="col-2">₹{{ de.price }}</p><p class="col-2"><del>₹1,999</del></p><p class="col-2">2% off</p>
-</div>
-<div>
-    available offers
-    <p><ul><li>Bank Offer100% Cashback upto 500Rs on Axis Bank SuperMoney Rupay CC UPI transactions on super.money UPIT&C</li></ul></p>
- 
-</div>
-<div class="row">
-   <b> Product Details</b> <br>
-    Color-Black <br>
-Outer material- Mesh <br>
-Model name-SYLVAIN <br>
-Ideal for -Men <br>
-Occasion -Sports <br>
-Heel Pattern - Textured
-Type For Sports - Running Shoes <br>
-Net Quantity - 1 <br>
-</div>
-  
-</div>
-
-            
         </div>
+        <div class="col-12 col-md-6">
+            <div class="text-light p-3">
+                <h5>Abros</h5>
+                <h3>{{ de.name }}</h3>
+
+                <div class="mt-2 d-flex align-items-center">
+                    <h4 class="mb-0">₹{{ de.price }}</h4>
+                    <p class="mb-0 ms-3"><del>₹1,999</del></p>
+                    <p class="mb-0 ms-3 text-success">2% off</p>
+                </div>
+
+                <div class="mt-4">
+                    <h6>Available offers</h6>
+                    <ul>
+                        <li>Bank Offer: 100% Cashback up to 500Rs on Axis Bank SuperMoney Rupay CC UPI transactions on super.money UPI T&C</li>
+                    </ul>
+                </div>
+
+                <div class="mt-4">
+                    <h5>Product Details</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Color:</strong> Black</li>
+                        <li><strong>Outer material:</strong> Mesh</li>
+                        <li><strong>Model name:</strong> SYLVAIN</li>
+                        <li><strong>Ideal for:</strong> Men</li>
+                        <li><strong>Occasion:</strong> Sports</li>
+                        <li><strong>Heel Pattern:</strong> Textured</li>
+                        <li><strong>Type For Sports:</strong> Running Shoes</li>
+                        <li><strong>Net Quantity:</strong> 1</li>
+                    </ul>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <a href="{% url 'add_cart' de.id %}" class="btn btn-success w-100"><i class="fa fa-shopping-cart"></i> ADD TO CART</a>
+                    </div>
+                    <div class="col-6">
+                        {# Assuming a 'buy_now' URL, otherwise this can be a button that triggers JS #}
+                        <a href="#" class="btn btn-primary w-100"><i class="fa fa-bolt"></i> BUY NOW</a>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
+</div>
 
 {% endblock %}
-{#</body>#}
-{#</html>#}

@@ -47,4 +47,4 @@ def searching(request):
         prod = Product.objects.all().filter(Q(name__icontains= query)|Q(desc__icontains= query))
         cat = Category.objects.all()
 
-    return render(request,'index.html',{'pr':prod,'qr':query,'cat':cat})
+    return render(request,'index.html',{'pg':prod,'qr':query,'cat':cat})

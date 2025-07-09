@@ -141,22 +141,31 @@
       </div>
     </div>
     <div class="row">
+
         {% for i in pg %}
+
             
                 <div class="col-12 col-md-3 mt-4 m-2">
+                 <a href="{{ i.get_url }}">
                     <div class="card text-bg-dark">
                     <img src="{{ i.img.url }}" style="border-radius: 5px;" class="card-image" alt="">
                     <div class="card-body">
                         <div class="card-title">{{ i.name|truncatechars:25 }}</div>
                         <p class="card-text">{{ i.desc|truncatechars:25 }}</p>
                         <p class="card-text text-light">₹{{ i.price }}</p>
+                        {% if i.stock <= 0 %}
+
+                        <p class="card-text text-danger">No stock available !</p>
+                            {% else %}
                         <p class="card-text text-light">left in : {{ i.stock }} stock</p>
-                        <a href="{{ i.get_url }}">
-                            <div class="btn btn-success">Details</div>
-                        </a>
+                        {% endif %}
+
+
+
                     </div>
                     
                 </div>
+                 </a>
                 </div>
 
         {% endfor %}

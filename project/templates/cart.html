@@ -1,0 +1,72 @@
+
+
+{% extends 'base.html' %}
+    <!-- cart product div -->
+{% block content %}
+
+<div class="container " style="margin-top: 90px">
+
+    <div class="card p-2 "style="background-color: rgba(47,48,51,0.91) ">
+      <div class="p-3 ">
+          {% for ct in ci %}
+        <div class=" shadow row mt-1 text-bg-dark">
+            <!-- product image -->
+            
+            <img class="col-12 border p-2 col-sm-3" src="{{ ct.PRODUCT.img.url }}" alt="">
+
+           
+            
+            <div class="col-12 col-sm-9 row"><!-- cart a product body-->
+                <p style="font-family: Courier, monospace;" class="overflow-hidden text-light">{{ ct.PRODUCT.name }}</p>
+                <p class="overflow-hidden col-12 col-sm-3 text-secondary"><del>₹20,000</del></p>
+                <p class=" overflow-hidden col-12 col-sm-3">₹{{ ct.PRODUCT.price }}</p>
+                <p class="col-12 col-sm-6 overflow-hidden text-success">%25 Discount</p>
+                
+            <div class="row">
+                    <p class="btn btn-danger col-6 col-sm-4 text-center m-2 " style="height: 40px;">Remove</p>
+                    <p class="btn btn-success col-6 col-sm-4 text-center m-2" style="height: 40px;">Details</p>
+
+                </div>
+                <div class="row">
+                    <div class="col-3  m-3" style="border-radius: 100%;border: 1cm;; height: 40px;width: 40px;"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-patch-minus" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M5.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H6a.5.5 0 0 1-.5-.5"/>
+  <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911z"/>
+</svg></div>
+                    <div class="col-3 p-2 mt-3 m text-center text-light" style=" height:40px ;border-radius: 10px;background-color: rgba(18, 18, 19, 0.906);margin-left: 8px;">{{ ct.quntity }}</div>
+                    <div class="col-3 text-center mt-3" style="border-radius: 100%;border: 1cm; height: 40px;width: 40px;">
+                        <a href="{% url 'add_cart' ct.PRODUCT.id %}"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-patch-plus" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5"/>
+  <path d="m10.273 2.513-.921-.944.715-.698.622.637.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636a2.89 2.89 0 0 1 4.134 0l-.715.698a1.89 1.89 0 0 0-2.704 0l-.92.944-1.32-.016a1.89 1.89 0 0 0-1.911 1.912l.016 1.318-.944.921a1.89 1.89 0 0 0 0 2.704l.944.92-.016 1.32a1.89 1.89 0 0 0 1.912 1.911l1.318-.016.921.944a1.89 1.89 0 0 0 2.704 0l.92-.944 1.32.016a1.89 1.89 0 0 0 1.911-1.912l-.016-1.318.944-.921a1.89 1.89 0 0 0 0-2.704l-.944-.92.016-1.32a1.89 1.89 0 0 0-1.912-1.911z"/>
+</svg></a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+          {% endfor %}
+          <div class="container">
+    <div class="row m-2">
+<div class="col m- col-12 ">
+        <a href="#">  <div class="btn btn-warning text-light col-12">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+          </svg>Place Order </div>
+</a>
+    </div>
+    </div>
+
+</div>
+        </div>
+      </div>
+
+        
+    
+    </div>  
+   
+    <!--  place holder button  -->
+</div>
+{% endblock %}
+
+    
