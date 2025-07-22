@@ -30,8 +30,9 @@
 </head>
 <body>
     <div class="body container ">
-        <div class="row ">
-            <form action="" method="post" class="form-action">
+        <div class="row">
+            <form action="{% url 'register' %}" method="post" class="form-action">
+                {% csrf_token %}
                 <div class="row mt-md-3">
                     <div class="col-md-2"></div>
                     <div class="container card  form_body col-md-8">
@@ -42,10 +43,11 @@
                             <div class="card form_card col-10 ms-3">
                                 <div class="label col-12  mt-3 ">First Name:</div><div class="col-12"><input type="text"name="fname"class="form-control "></div>
                     <div class="label col-12 ">Last Name:</div><div class="col-12"><input type="text"name="lname"class="form-control "></div>
-                    <div class="label col-12 ">Username:</div><div class="col-12"><input type="text"name="Username"class="form-control "></div>
+                    <div class="label col-12 ">Username:</div><div class="col-12"><input type="text"name="uname"class="form-control" >{% if v_uname == False %} <br><p class="text-danger">you entered user name already taken</p>{% endif %}</div>
                     <div class="label col-12 ">Email:</div><div class="col-12"><input type="email"name="email"class="form-control password"></div>
-                    <div class="label col-12 ">Password:</div><div class="col-12"><input type="password" name="password"class="form-control"></div>
-                    <div class="label col-12 ">Confirm Password:</div><div class="col-12"><input type="password"name="confirmpassword"class="form-control "></div>
+                    <div class="label col-12 ">Password:</div><div class="col-12"><input type="password" name="password1"class="form-control"></div>
+                    <div class="label col-12 ">Confirm Password:</div><div class="col-12"><input type="password"name="password2"class="form-control ">
+                            {% if pass == False %}<p class="text-danger">confirm password are not same</p>{% endif %}</div>
                     <div class="row">
                         <div class="col-4"></div>
                     <input type="submit" class="btn btn-dark container p-2 mt-4 col-4" value="Register">
@@ -58,12 +60,13 @@
                    
                 </div>
                  <div class="col-md-2"></div>
+                </div>
             </form>
             
-            </div>
-            
-            
         </div>
+            
+            
+    </div>
     
     
 </body>

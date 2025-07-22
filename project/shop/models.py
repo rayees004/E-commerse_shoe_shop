@@ -3,6 +3,8 @@ from django.db import models
 # Create your models here.
 from django.urls import reverse
 
+from accounts.models import User
+
 
 class Category(models.Model):
     class Meta:
@@ -30,6 +32,6 @@ class Product(models.Model):
     stock = models.IntegerField()
     available = models.BooleanField(default=False)
     price = models.IntegerField()
-    CATEGORY = models.ForeignKey(Category,on_delete = models.CASCADE) #foreignkey
+    CATEGORY = models.ForeignKey(Category,on_delete = models.CASCADE)#foreignkey
     def get_url(self):
         return reverse('details',args=[self.CATEGORY.slug,self.slug])

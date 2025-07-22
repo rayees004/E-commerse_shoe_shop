@@ -30,6 +30,8 @@ def home(request,c_slug=None):
 
 
 
+
+
     return render(request,'index.html',{'pr':pr,'cat':cat,'pg':pro})
 
 def details(request,c_slug,p_slug):
@@ -48,3 +50,4 @@ def searching(request):
         cat = Category.objects.all()
 
     return render(request,'index.html',{'pg':prod,'qr':query,'cat':cat})
+

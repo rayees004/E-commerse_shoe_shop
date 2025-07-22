@@ -33,6 +33,7 @@
     <div class="body container ">
         
             <form action="" method="post" class="form-action">
+                {% csrf_token %}
                 <div class="row mt-md-4">
                     <div class="col-md-3"></div>
                     <div class="container card  form_body col-md-6">
@@ -40,7 +41,7 @@
                     <div class="row">
                         <div class="col-1"></div>
                     <div class="row-md  card login_body col-10 p-4 m">
-                    <div class="label col-12 mt-5">Username:</div><div class="col-12 col-md-12"><input type="text"name="Username"class="form-control col-md-6"></div>
+                    <div class="label col-12 mt-5">Username:</div><div class="col-12 col-md-12"><input type="text"name="username"class="form-control col-md-6"></div>
                     <div class="label  col-12 mt-5">Password:</div><div class="col-12 col-md-12"><input type="password"name="password"class="form-control col-md-6"></div>
                     <input type="submit" class="btn btn-dark container p-2 col-4 mt-5" value="Login">
                     </div>

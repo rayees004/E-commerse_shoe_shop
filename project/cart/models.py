@@ -1,5 +1,9 @@
 from django.db import models
+from django.utils import timezone
+from django.utils.datetime_safe import datetime
+
 from shop.models import *
+from accounts.models import *
 
 
 # Create your models here.
