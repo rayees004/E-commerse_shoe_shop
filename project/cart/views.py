@@ -5,6 +5,7 @@ from .models import *
 
 # Create your views here.
 def cart_details(request,tot = 0, count = 0,ct_items = None):
+
     try:
         ct = Cart.objects.get(cart_id=c_id(request))
         ct_items = Item.objects.filter(CART=ct,active=True)

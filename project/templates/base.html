@@ -64,7 +64,7 @@
                     <ul class="nav">
                     {% if user != None %}
 
-                        <li><a href="{% url 'login' %}">home</a></li>
+                        <li><a href="{% url 'home' %}">home</a></li>
                         <li><a href="{% url 'cart_details' %}">My Cart</a></li>
                         <li><a href="{% url 'logout' %}">logout</a></li>
                         <li><a href="#">Profile <img src="{% static 'index/assets/images/profile-header.jpg' %}" alt=""></a></li>
@@ -81,10 +81,6 @@
 
                     <form action="" method="post">
                         {% csrf_token %}
-                         {% if user.is_authenticated %}
-    <input type="hidden" value="{{ user.id }}" name="user_id">
-{% endif %}
-                    </form>
 
                     <!-- ***** Menu End ***** -->
                 </nav>

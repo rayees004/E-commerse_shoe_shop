@@ -47,28 +47,19 @@ def register(request):
     return render(request,'registration.html',)
 def login(request,c_slug=None):
     if request.method == 'POST':
-        uname = None
-        password = None
-        user_id = None
+
         uname = request.POST.get('username')
         password = request.POST.get('password')
-        user_id = request.POST.get('user_id')
-        print('--------------------------user_id',user_id)
-        if (uname != None and password != None):
-
-            user = User.objects.filter(username=uname, password=password)
-        else:
-            user = User.objects.filter(id=user_id)
-
+        user = User.objects.filter(username=uname, password=password)
 
         if user.exists():
-              from shop.models import Product,Category
-              pro = Product.objects.all()
-              cat = Category.objects.all()
-              return render(request,'index.html',{'user':user,'pg':pro,'cat':cat})
+            log = User.objects.get(username=uname, password=password)
+            request.session['lid'] = log.id
+            return redirect('/')
 
     return render(request,'login.html')
 
 def logout(request):
+    request.session['lid'] = None
     return redirect('/')
 

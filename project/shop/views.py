@@ -13,7 +13,12 @@ def home(request,c_slug=None):
 
     c_page = None
     product = None
-    user = None
+    user_id = request.session['lid']
+    if user_id != None :
+        user = User.objects.filter(id=user_id)
+    else:
+        user = None
+
     if c_slug != None:
         c_page = get_object_or_404(Category, slug=c_slug)
 
@@ -51,6 +56,8 @@ def searching(request):
         cat = Category.objects.all()
 
     return render(request,'index.html',{'pg':prod,'qr':query,'cat':cat,})
+
+
 
 
 

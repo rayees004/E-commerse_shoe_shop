@@ -39,7 +39,7 @@
 
       {% for i in cat %}
           {% if user != None %}
-              <a class="items truncatechars-20" href={{ i.log_url }}><li> l{{ i.name }}</li></a>
+              <a class="items truncatechars-20" href={{ i.log_url }}><li> .{{ i.name }}</li></a>
           {% else %}
               <a class="items truncatechars-20" href={{ i.get_url }}><li>{{ i.name }}</li></a>
           {% endif %}
