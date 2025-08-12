@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from shop import views
 
 
@@ -45,19 +45,30 @@ def register(request):
             return render(request, 'registration.html', {'pass':confirm_pass})
 
     return render(request,'registration.html',)
-def login(request):
+def login(request,c_slug=None):
     if request.method == 'POST':
-        print('working the post method')
+        uname = None
+        password = None
+        user_id = None
         uname = request.POST.get('username')
         password = request.POST.get('password')
-        user = User.objects.filter(username=uname, password=password)
-        ge = home(request)
+        user_id = request.POST.get('user_id')
+        print('--------------------------user_id',user_id)
+        if (uname != None and password != None):
 
-
-        if user:
-            # return redirect('/',)
-            return render(request, 'index.html', {'pr': ge.pr, 'cat': ge.cat, 'pg': ge.pro,'user':user})
+            user = User.objects.filter(username=uname, password=password)
         else:
-            return redirect('login')
+            user = User.objects.filter(id=user_id)
+
+
+        if user.exists():
+              from shop.models import Product,Category
+              pro = Product.objects.all()
+              cat = Category.objects.all()
+              return render(request,'index.html',{'user':user,'pg':pro,'cat':cat})
+
     return render(request,'login.html')
+
+def logout(request):
+    return redirect('/')
 

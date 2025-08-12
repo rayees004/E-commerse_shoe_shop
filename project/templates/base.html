@@ -62,15 +62,30 @@
                     <!-- ***** Search End ***** -->
                     <!-- ***** Menu Start ***** -->
                     <ul class="nav">
-                        <li><a href="/" class="active">Home</a></li>
-                        <li><a href="accounts/register">Register</a></li>
-                        <li><a href="{% url 'login' %}">Login</a></li>
+                    {% if user != None %}
+
+                        <li><a href="{% url 'login' %}">home</a></li>
                         <li><a href="{% url 'cart_details' %}">My Cart</a></li>
+                        <li><a href="{% url 'logout' %}">logout</a></li>
                         <li><a href="#">Profile <img src="{% static 'index/assets/images/profile-header.jpg' %}" alt=""></a></li>
-                    </ul>
+
+                        {% else %}
+                        <li><a href="/" class="active">home</a></li>
+                        <li><a href="accounts/register">Register</a></li>
+                        <li><a href="{% url 'cart_details' %}">My Cart</a></li>
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                     {% endif %}</ul>
                     <a class='menu-trigger'>
                         <span>Menu</span>
                     </a>
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+                         {% if user.is_authenticated %}
+    <input type="hidden" value="{{ user.id }}" name="user_id">
+{% endif %}
+                    </form>
+
                     <!-- ***** Menu End ***** -->
                 </nav>
             </div>

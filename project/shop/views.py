@@ -3,17 +3,22 @@ from django.shortcuts import render,get_object_or_404
 from django.core.paginator import Paginator,EmptyPage,InvalidPage
 
 
+
 from .models import *
+from accounts.models import User
 
 # Create your views here.
 def home(request,c_slug=None):
+
+
     c_page = None
     product = None
-    if c_slug != None :
+    user = None
+    if c_slug != None:
         c_page = get_object_or_404(Category, slug=c_slug)
-        print(c_page)
+
         pr = Product.objects.filter(CATEGORY=c_page, available=True)
-        print(pr)
+
     else:
         pr = Product.objects.all().filter(available = True)
 
@@ -28,11 +33,7 @@ def home(request,c_slug=None):
     except(EmptyPage,InvalidPage):
         pro = paginator.page(paginator.num_pages)
 
-
-
-
-
-    return render(request,'index.html',{'pr':pr,'cat':cat,'pg':pro})
+    return render(request,'index.html',{'pr':pr,'cat':cat,'pg':pro,'user':user})
 
 def details(request,c_slug,p_slug):
 
@@ -49,5 +50,7 @@ def searching(request):
         prod = Product.objects.all().filter(Q(name__icontains= query)|Q(desc__icontains= query))
         cat = Category.objects.all()
 
-    return render(request,'index.html',{'pg':prod,'qr':query,'cat':cat})
+    return render(request,'index.html',{'pg':prod,'qr':query,'cat':cat,})
+
+
 

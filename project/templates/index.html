@@ -38,7 +38,12 @@
     <a href="/"><li>All</li></a>
 
       {% for i in cat %}
-    <a class="items truncatechars-20" href={{ i.get_url }}><li>{{ i.name }}</li></a>
+          {% if user != None %}
+              <a class="items truncatechars-20" href={{ i.log_url }}><li> l{{ i.name }}</li></a>
+          {% else %}
+              <a class="items truncatechars-20" href={{ i.get_url }}><li>{{ i.name }}</li></a>
+          {% endif %}
+
 
     {% endfor %}
 
