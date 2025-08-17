@@ -1,47 +1,29 @@
-from django.db.models.expressions import F, OrderBy
+from django.db.models.expressions import OrderByList
 
 
 class OrderableAggMixin:
-
-    def __init__(self, expression, ordering=(), **extra):
-        if not isinstance(ordering, (list, tuple)):
-            ordering = [ordering]
-        ordering = ordering or []
-        # Transform minus sign prefixed strings into an OrderBy() expression.
-        ordering = (
-            (OrderBy(F(o[1:]), descending=True) if isinstance(o, str) and o[0] == '-' else o)
-            for o in ordering
-        )
-        super().__init__(expression, **extra)
-        self.ordering = self._parse_expressions(*ordering)
+    def __init__(self, *expressions, ordering=(), **extra):
+        if isinstance(ordering, (list, tuple)):
+            self.order_by = OrderByList(*ordering)
+        else:
+            self.order_by = OrderByList(ordering)
+        super().__init__(*expressions, **extra)
 
     def resolve_expression(self, *args, **kwargs):
-        self.ordering = [expr.resolve_expression(*args, **kwargs) for expr in self.ordering]
+        self.order_by = self.order_by.resolve_expression(*args, **kwargs)
         return super().resolve_expression(*args, **kwargs)
 
-    def as_sql(self, compiler, connection):
-        if self.ordering:
-            self.extra['ordering'] = 'ORDER BY ' + ', '.join((
-                ordering_element.as_sql(compiler, connection)[0]
-                for ordering_element in self.ordering
-            ))
-        else:
-            self.extra['ordering'] = ''
-        return super().as_sql(compiler, connection)
-
     def get_source_expressions(self):
-        return self.source_expressions + self.ordering
+        if self.order_by.source_expressions:
+            return super().get_source_expressions() + [self.order_by]
+        return super().get_source_expressions()
 
-    def get_source_fields(self):
-        # Filter out fields contributed by the ordering expressions as
-        # these should not be used to determine which the return type of the
-        # expression.
-        return [
-            e._output_field_or_none
-            for e in self.get_source_expressions()[:self._get_ordering_expressions_index()]
-        ]
+    def set_source_expressions(self, exprs):
+        if isinstance(exprs[-1], OrderByList):
+            *exprs, self.order_by = exprs
+        return super().set_source_expressions(exprs)
 
-    def _get_ordering_expressions_index(self):
-        """Return the index at which the ordering expressions start."""
-        source_expressions = self.get_source_expressions()
-        return len(source_expressions) - len(self.ordering)
+    def as_sql(self, compiler, connection):
+        order_by_sql, order_by_params = compiler.compile(self.order_by)
+        sql, sql_params = super().as_sql(compiler, connection, ordering=order_by_sql)
+        return sql, (*sql_params, *order_by_params)

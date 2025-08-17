@@ -19,7 +19,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div class="page-content">
+        <div class="page-content" style='margin-top:10px'>
 
           <!-- ***** Banner Start ***** -->
           <div class="main-banner">
@@ -33,19 +33,22 @@
               </div>
             </div>
               <div class="dropdown">
-  <button class="btn btn-light dropdown-toggle">Filter</button>
-  <div class="dropdown-options ">
-    <a href="/"><li>All</li></a>
-
-      {% for i in cat %}
+  <button class="btn btn-light dropdown-toggle" style="width:150;margin:auto">Filter</button>
+  <div class="dropdown-options " >
+    
+    <div class="bg-dark" style='width:150px;border-radius:10px;'><a href="/"><li>&nbsp;&nbsp;All</li></a>{% for i in cat %}
+      
           {% if user != None %}
-              <a class="items truncatechars-20" href={{ i.log_url }}><li> .{{ i.name }}</li></a>
+              <a class="items truncatechars-20 text-light m-2"  href={{ i.log_url }}><li style='margin-left:10px'>&nbsp;&nbsp;{{ i.name }}</li></a>
           {% else %}
-              <a class="items truncatechars-20" href={{ i.get_url }}><li>{{ i.name }}</li></a>
+              <a class="items truncatechars-20 text-light m-2 " href={{ i.get_url }}><li>&nbsp;&nbsp;{{ i.name }}</li style='margin-left:20px'></a>
           {% endif %}
 
 
     {% endfor %}
+  </div>
+
+      
 
   </div>
 </div>

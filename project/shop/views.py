@@ -9,36 +9,35 @@ from accounts.models import User
 
 # Create your views here.
 def home(request,c_slug=None):
-
-
     c_page = None
-    product = None
-    user_id = request.session['lid']
-    if user_id != None :
-        user = User.objects.filter(id=user_id)
-    else:
-        user = None
+    products_list = None
+    user = None
 
-    if c_slug != None:
+    user_id = request.session.get('lid')
+    if user_id:
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            user = None
+
+    if c_slug:
         c_page = get_object_or_404(Category, slug=c_slug)
-
-        pr = Product.objects.filter(CATEGORY=c_page, available=True)
-
+        products_list = Product.objects.filter(CATEGORY=c_page, available=True)
     else:
-        pr = Product.objects.all().filter(available = True)
+        products_list = Product.objects.all().filter(available=True)
 
     cat = Category.objects.all()
-    paginator = Paginator(pr,2)
+    paginator = Paginator(products_list, 2)
     try:
-        page = int(request.GET.get('page','1'))
-    except:
+        page = int(request.GET.get('page', '1'))
+    except (ValueError, TypeError):
         page = 1
     try:
-        pro = paginator.page(page)
-    except(EmptyPage,InvalidPage):
-        pro = paginator.page(paginator.num_pages)
+        products = paginator.page(page)
+    except (EmptyPage, InvalidPage):
+        products = paginator.page(paginator.num_pages)
 
-    return render(request,'index.html',{'pr':pr,'cat':cat,'pg':pro,'user':user})
+    return render(request, 'index.html', {'pr': products, 'cat': cat, 'pg': products, 'user': user})
 
 def details(request,c_slug,p_slug):
 

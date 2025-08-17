@@ -40,7 +40,7 @@
   </div>
   <!-- ***** Preloader End ***** -->
 
-  <nav><!-- ***** Header Area Start ***** -->
+  {% comment %} <nav><!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky">
     <div class="container">
         <div class="row">
@@ -64,19 +64,20 @@
                     <ul class="nav">
                     {% if user != None %}
 
-                        <li><a href="{% url 'home' %}">home</a></li>
-                        <li><a href="{% url 'cart_details' %}">My Cart</a></li>
-                        <li><a href="{% url 'logout' %}">logout</a></li>
-                        <li><a href="#">Profile <img src="{% static 'index/assets/images/profile-header.jpg' %}" alt=""></a></li>
+                        <li class='nav-item'><a href="{% url 'home' %}"><u>{{ user.username }}</u></a></li>
+                        <li class='nav-item'><a href="{% url 'cart_details' %}">My Cart</a></li>
+                        <li class='nav-item'><a href="{% url 'logout' %}">logout</a></li>
+                        <li class='nav-item'><a href="#">Profile <img src="{% static 'index/assets/images/profile-header.jpg' %}" alt=""></a></li>
 
                         {% else %}
-                        <li><a href="/" class="active">home</a></li>
-                        <li><a href="accounts/register">Register</a></li>
-                        <li><a href="{% url 'cart_details' %}">My Cart</a></li>
-                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li class='nav-item'><a href="/" class="active">home</a></li>
+                        <li class='nav-item'><a href="{% url 'register' %}">Register</a></li>
+                        <li class='nav-item'><a href="{% url 'cart_details' %}">My Cart</a></li>
+                        <li class='nav-item'><a href="{% url 'login' %}">Login</a></li>
                      {% endif %}</ul>
                     <a class='menu-trigger'>
                         <span>Menu</span>
+                        
                     </a>
 
                     <form action="" method="post">
@@ -87,8 +88,64 @@
             </div>
         </div>
     </div>
-  </header><br></nav>
-  <!-- ***** Header Area End ***** -->
+  </header><br></nav> {% endcomment %}
+
+
+
+
+
+     
+  {% comment %} ------------------------------------------------------------------------------ {% endcomment %}
+   <div class='container row text-center'><nav class="main-nav navbar navbar-expand-lg ">
+  <div class="container" style='border-radius:30;border-color:red'>
+    <a href="/" class="logo ">
+                        <img src="{% static 'index/assets/images/logo1.png' %}"  alt="">
+                    </a>
+    <button class="navbar-toggler" type="button"  data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon " style="color:white"><i class="fas fa-bars" style="color: #ecececff;"></i></span>
+    </button>
+    <div class=" collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="search-input ">
+                      <form id="search" action="{% url 'search' %}" method="get" enctype="multipart/form-data">
+
+                        <input type="text" placeholder="Type Something . . . " id='searchText' style='width: 300px;
+      padding: 10px;
+      border: 1px solid #ffffffff;
+      border-radius: 25px; /* Makes the edges rounded */
+      outline: none;
+      font-size: 16px;
+      background: #1f2122 ;
+      color: white;
+      margin-top:10px;
+      margin-left:35px;
+      margin-right:50px'
+       name="q" onkeypress="handle" />
+                        <i class="fa fa-search"></i>
+                      </form>
+                    </div>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+        {% if user != None %}
+
+                        <li class='nav-item ' style='margin-right:50px'><a href="{% url 'home' %}"><u>{{ user.username }}</u></a></li>
+                        <li class='nav-item 'style='margin-right:50px'><a href="{% url 'cart_details' %}">My Cart</a></li>
+                        <li class='nav-item 'style='margin-right:50px'><a href="{% url 'logout' %}">logout</a></li>
+                        <li class='nav-item 'style='margin-right:50px'><a href="#">Profile </a></li>
+
+                        {% else %}
+                        <li class='nav-item 'style='margin-right:50px'><a href="/" class="active">home</a></li>
+                        <li class='nav-item 'style='margin-right:50px'><a href="{% url 'register' %}">Register</a></li>
+                        <li class='nav-item'style='margin-right:50px'><a href="{% url 'cart_details' %}">My Cart</a></li>
+                        <li class='nav-item 'style='margin-right:50px'><a href="{% url 'login' %}">Login</a></li>
+                     {% endif %}
+      
+      </ul>
+        
+      
+      
+    </div>
+  </div>
+</nav></div>
+  <!-- ***** Header Area End ***** --> 
 
  {% block content %}
 

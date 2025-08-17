@@ -8,8 +8,7 @@ from shop.views import home
 
 
 def register(request):
-
-
+    print('------------------------------------------------------------------------------------------------not resppond')
     if request.method == 'POST':
         fname = request.POST.get('fname')
         lname = request.POST.get('lname')
@@ -43,8 +42,7 @@ def register(request):
         else:
             confirm_pass = False
             return render(request, 'registration.html', {'pass':confirm_pass})
-
-    return render(request,'registration.html',)
+    return render(request,'registration.html')
 def login(request,c_slug=None):
     if request.method == 'POST':
 

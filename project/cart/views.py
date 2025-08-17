@@ -5,23 +5,37 @@ from .models import *
 
 # Create your views here.
 def cart_details(request,tot = 0, count = 0,ct_items = None):
+    user_id = request.session['lid']
+    if user_id != None :
+        user = User.objects.get(id= user_id)
+    else:
+        user = None
+        
 
     try:
         ct = Cart.objects.get(cart_id=c_id(request))
+        
         ct_items = Item.objects.filter(CART=ct,active=True)
+        
         for i in ct_items:
             tot +=(i.PRODUCT.price * i.quntity)
             count += i.quntity
     except ObjectDoesNotExist:
         pass
 
-    return render(request,'cart.html',{'ci':ct_items,'t':tot,'cn':count})
+    return render(request,'cart.html',{'ci':ct_items,'t':tot,'cn':count,'user':user})
 
 def c_id(request):
-    ct_id=request.session.session_key
-    if not ct_id:
-        ct_id = request.session.create()
-    return ct_id
+    user_id = request.session['lid']
+    if not user_id:
+        ct_id=request.session.session_key
+
+        if not ct_id:
+            ct_id = request.session.create()
+        return ct_id
+    else :
+        ct_id = user_id
+        return ct_id
 
 
 def cart_add(request,product_id):

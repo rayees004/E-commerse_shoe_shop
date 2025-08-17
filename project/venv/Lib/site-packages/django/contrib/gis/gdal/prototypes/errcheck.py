@@ -4,9 +4,7 @@
 """
 from ctypes import c_void_p, string_at
 
-from django.contrib.gis.gdal.error import (
-    GDALException, SRSException, check_err,
-)
+from django.contrib.gis.gdal.error import GDALException, SRSException, check_err
 from django.contrib.gis.gdal.libgdal import lgdal
 
 
@@ -63,14 +61,14 @@ def check_string(result, func, cargs, offset=-1, str_result=False):
         lgdal.VSIFree(ptr)
     return s
 
+
 # ### DataSource, Layer error-checking ###
 
 
 # ### Envelope checking ###
 def check_envelope(result, func, cargs, offset=-1):
     "Check a function that returns an OGR Envelope by reference."
-    env = ptr_byref(cargs, offset)
-    return env
+    return ptr_byref(cargs, offset)
 
 
 # ### Geometry error-checking routines ###
@@ -81,7 +79,9 @@ def check_geom(result, func, cargs):
     if isinstance(result, int):
         result = c_void_p(result)
     if not result:
-        raise GDALException('Invalid geometry pointer returned from "%s".' % func.__name__)
+        raise GDALException(
+            'Invalid geometry pointer returned from "%s".' % func.__name__
+        )
     return result
 
 
@@ -97,7 +97,9 @@ def check_srs(result, func, cargs):
     if isinstance(result, int):
         result = c_void_p(result)
     if not result:
-        raise SRSException('Invalid spatial reference pointer returned from "%s".' % func.__name__)
+        raise SRSException(
+            'Invalid spatial reference pointer returned from "%s".' % func.__name__
+        )
     return result
 
 
