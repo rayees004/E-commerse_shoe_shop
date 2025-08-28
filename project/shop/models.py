@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 from django.urls import reverse
 
-from accounts.models import User
+from accounts.models import Address
 
 
 class Category(models.Model):
@@ -35,3 +35,19 @@ class Product(models.Model):
     CATEGORY = models.ForeignKey(Category,on_delete = models.CASCADE)#foreignkey
     def get_url(self):
         return reverse('details',args=[self.CATEGORY.slug,self.slug])
+
+
+
+
+class Order_Summary(models.Model):
+    ADDRESS = models.ForeignKey(Address,on_delete=models.CASCADE,default=None)
+    PRODUCT = models.ForeignKey(Product,on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=100)
+    price = models.IntegerField(default=None)
+    payment_type = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.PRODUCT.name
+
+

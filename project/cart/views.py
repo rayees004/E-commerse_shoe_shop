@@ -16,6 +16,7 @@ def cart_details(request,tot = 0, count = 0,ct_items = None):
         ct = Cart.objects.get(cart_id=c_id(request))
         
         ct_items = Item.objects.filter(CART=ct,active=True)
+
         
         for i in ct_items:
             tot +=(i.PRODUCT.price * i.quntity)
@@ -77,3 +78,4 @@ def cart_remove(request,product_id):
     cart_item.delete()
 
     return redirect('cart_details')
+

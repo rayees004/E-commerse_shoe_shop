@@ -18,7 +18,7 @@ class Item(models.Model):
     CART = models.ForeignKey(Cart,on_delete=models.CASCADE)
     quntity = models.IntegerField()
     active = models.BooleanField(default=True)
-    def _str_(self):
-        return self.PRODUCT
+    def __str__(self):
+        return self.PRODUCT.name
 
 
