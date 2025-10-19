@@ -6,6 +6,11 @@ from .models import *
 # Create your views here.
 def cart_details(request,tot = 0, count = 0,ct_items = None):
     user_id = request.session['lid']
+    try:
+        ct = Cart.objects.get(cart_id=c_id(request))
+    except Cart.DoesNotExist:
+        ct = Cart.objects.create(cart_id = c_id(request))
+        ct.save()
     if user_id != None :
         user = User.objects.get(id= user_id)
     else:
@@ -24,7 +29,7 @@ def cart_details(request,tot = 0, count = 0,ct_items = None):
     except ObjectDoesNotExist:
         pass
 
-    return render(request,'cart.html',{'ci':ct_items,'t':tot,'cn':count,'user':user})
+    return render(request,'cart.html',{'ci':ct_items,'t':tot,'cn':count,'user':user,'cart':ct})
 
 def c_id(request):
     user_id = request.session['lid']

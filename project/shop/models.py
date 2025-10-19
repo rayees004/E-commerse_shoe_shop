@@ -6,6 +6,7 @@ from django.urls import reverse
 from accounts.models import Address
 
 
+
 class Category(models.Model):
     class Meta:
         ordering=('name',)
@@ -49,5 +50,8 @@ class Order_Summary(models.Model):
 
     def __str__(self):
         return self.PRODUCT.name
+
+
+
 
 

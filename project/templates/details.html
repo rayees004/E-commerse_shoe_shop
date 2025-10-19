@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 {% block content %}
 <style>
@@ -10,12 +9,48 @@
         z-index: 1020; /* Ensures it stays on top */
     }
 }
+
+/* Image zoom (follow cursor) */
+.zoom-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: .5rem;
+}
+.zoom-container .zoom-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform .28s ease;
+    transform-origin: 50% 50%;
+    cursor: zoom-in;
+    will-change: transform;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+.zoom-container:hover .zoom-image {
+    transform: scale(2);
+    cursor: zoom-out;
+}
+
+/* make sure rounded corners remain when image scales */
+.zoom-container .zoom-image.rounded {
+    border-radius: .5rem;
+}
+
+/* responsive tweak so zoom isn't too strong on very small screens */
+@media (max-width: 576px) {
+    .zoom-container:hover .zoom-image {
+        transform: scale(2);
+    }
+}
 </style>
 <div class="container p-3" style="margin-top: 90px;">
     <div class="row">
         <div class="col-12 col-md-6">
             <div class="sticky-md-top">
-                <img src="{{ de.img.url }}" class="img-fluid rounded" alt="{{ de.name }}">
+                <div class="zoom-container">
+                    <img src="{{ de.img.url }}" class="img-fluid rounded zoom-image" alt="{{ de.name }}">
+                </div>
             </div>
         </div>
         <div class="col-12 col-md-6">
@@ -65,4 +100,36 @@
     </div>
 </div>
 
+<!-- Add script to update transform-origin based on cursor position -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const container = document.querySelector('.zoom-container');
+  if (!container) return;
+  const img = container.querySelector('.zoom-image');
+
+  function setOrigin(clientX, clientY) {
+    const rect = container.getBoundingClientRect();
+    const x = ((clientX - rect.left) / rect.width) * 100;
+    const y = ((clientY - rect.top) / rect.height) * 100;
+    // clamp values 0..100
+    const cx = Math.max(0, Math.min(100, x));
+    const cy = Math.max(0, Math.min(100, y));
+    img.style.transformOrigin = cx + '% ' + cy + '%';
+  }
+
+  container.addEventListener('mousemove', function (e) {
+    setOrigin(e.clientX, e.clientY);
+  });
+
+  // support touch move for mobile
+  container.addEventListener('touchmove', function (e) {
+    if (!e.touches || !e.touches[0]) return;
+    setOrigin(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive: true });
+
+  container.addEventListener('mouseleave', function () {
+    img.style.transformOrigin = '50% 50%';
+  });
+});
+</script>
 {% endblock %}

@@ -42,7 +42,7 @@ def register(request):
         else:
             confirm_pass = False
             return render(request, 'registration.html', {'pass':confirm_pass})
-    return render(request,'registration.html')
+    return render(request,'registration.html',{'user':None})
 def login(request,c_slug=None):
     if request.method == 'POST':
 
@@ -55,7 +55,7 @@ def login(request,c_slug=None):
             request.session['lid'] = log.id
             return redirect('/')
 
-    return render(request,'login.html')
+    return render(request,'login.html',{'user':None})
 
 def logout(request):
     request.session['lid'] = None

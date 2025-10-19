@@ -4,8 +4,7 @@ from django.core.paginator import Paginator,EmptyPage,InvalidPage
 from django.contrib import messages
 from django.http import HttpResponse
 
-
-
+from cart.models import Cart_Order_Summary, Item, Cart
 from .models import *
 from accounts.models import User,Address
 
@@ -62,6 +61,8 @@ def searching(request): #product Search function
         cat = Category.objects.all()
 
     return render(request,'index.html',{'pg':prod,'qr':query,'cat':cat,})
+
+
 def buy_now(request,pr_id): # induvidual product buynow funcition
 
     product = Product.objects.get(id=pr_id)
@@ -108,23 +109,31 @@ def buy_now(request,pr_id): # induvidual product buynow funcition
         order_data.save()
         return redirect('/')
     try:
+        print('---try block user login----------------------------------------------')
 
         user_id = request.session['lid']
-        print(user_id)
         if user_id == None:
+            print('----------------------------------------------------user not login----------------------------------------------')
 
             return redirect('login')
 
         else:
-            # address_catch = Address.objects.filter(USER_id = user_id)
-            # if address_catch != None :
-            #
-            #     ad_init = Address.objects.get(USER_id=user_id).first()
-            #
-            #     return render(request,'order_adress.html',{'product':product,'address':ad_init})
-            # else:
+            try:
+                address_catch = Address.objects.filter(USER_id = user_id)
+                for i in address_catch:
+                    address_last = i
+                if address_last :
+                
+                    
+                
+                    return render(request,'order_adress.html',{'product':product,'address':address_last})
+                else:
+                    return render(request,'order_adress.html',{'product':product})
+            except:
+                print('---exeption address not found----------------------------------------------')
                 return render(request,'order_adress.html',{'product':product})
     except:
+        print('---exeption user not login----------------------------------------------')
         return redirect('login')
 
 
@@ -134,3 +143,43 @@ def order_details(request):
     order_items = Order_Summary.objects.filter(ADDRESS__USER_id = user_id).order_by('-date')
     return render(request,'order_details.html',{'order_items':order_items,'user':user})
 
+def cart_order_address(request,pk):
+
+    
+    if request.method == 'POST':
+        payment_type = True
+        user_id = request.session['lid']
+        name = request.POST['name']
+        contact = request.POST['contact']
+        address = request.POST['address']
+        pin = request.POST['pin']
+        state = request.POST['state']
+        district = request.POST['district']
+        place = request.POST['place']
+        pay_type = request.POST['payment_type']
+        if pay_type == 'cash':
+            payment_type = False
+        if pay_type == 'pay':
+            payment_type = True
+        landmark = request.POST['landmark']
+
+        ad = Address.objects.create(
+            USER_id=user_id,
+            name=name,
+            address=address,
+            contact=contact,
+            pincode=pin,
+            state=state,
+            district=district,
+            place=place,
+            landmark=landmark,
+        )
+        ad.save()
+
+
+        
+        return redirect('/')
+
+
+
+    return render(request,'cart_order_address.html')
