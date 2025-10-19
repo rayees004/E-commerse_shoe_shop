@@ -1,0 +1,26 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+
+                <form action="" method="post" enctype="multipart/form-data" class="form">
+                    {% csrf_token %}
+                    <input class='form-control mt-2' name="name" type='text' placeholder='Name' value="{{ address.name }}">
+                    <input class='form-control mt-2' name="contact" type="text" placeholder='contact Number' value="{{ address.contact }}">
+                    <input class='form-control mt-2' name="address" type='text' placeholder='Address Line' value="{{ address.address }}">
+                    <input class='form-control mt-2' name="pin" type='text' placeholder='pin code' value="{{ address.pincode }}">
+                    <input class='form-control mt-2' name="state" type='text' placeholder='state' value="{{ address.state }}">
+                    <input class='form-control mt-2' name="district" type='text' placeholder='District' value="{{ address.district }}">
+                    <input class='form-control mt-2' name="place" type='text' placeholder='place' value="{{ address.place }}">
+                    <input class='form-control mt-2' name="landmark" type='text' placeholder='Landmark' value="{{ address.landmark }}">
+                    <label class='m-1' ><input type="radio" name='payment_type' value="cash" > Cash on Delivery</label><br>
+                    <label class='m-1'><input type="radio" name='payment_type' value="pay"> Pay on delivery</label><br>
+                    <input class="btn btn-warning" type="submit" value="Place Order">
+                </form>
+        </div>
+        
+
+        
+    </div>
+</div>

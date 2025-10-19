@@ -91,7 +91,7 @@ a {
   text-decoration: none !important;
 }
 a:hover {
-	color: #F99;
+	color: #fff3fe;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -128,7 +128,7 @@ body {
 }
 
 body .page-content {
-  margin-top: 110px;
+  margin-top: 10px;
   background-color: #27292a;
   padding: 60px;
   border-radius: 23px;
@@ -385,7 +385,7 @@ Header Style
   height: 46px;
   border-radius: 23px;
   border: none;
-  color: #666;
+  color: #0b0b0b;
   font-size: 14px;
   padding: 0px 15px 0px 45px;
 }

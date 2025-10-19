@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        {% for i in order_items %}
+        <div class="col-12">
+            <div class="card text-light bg-secondary mb-3">
+                <div class="row g-0">
+                    <div class="col-2">
+                        <img src="{{ i.PRODUCT.img.url }}" class="img-fluid rounded-start" alt="...">
+                    </div>
+                    <div class="col-10">
+                         <div class="card-body">
+                            <h5 class="card-title text-light">{{ i.PRODUCT.name }}</h5>
+                            <p class="card-text text-light">₹ {{ i.price }}</p>
+                            <p class="card-text text-light">Date: {{ i.date }}</p>
+                            <p class="card-text text-light">Status: {{ i.status }}</p>
+                             {% if i.payment_type == True %}
+                                 <p class="card-text text-light">Pay on Delivery</p>
+                                 {% else %}
+                                 <p class="card-text text-light">Cash on Delivery</p>
+                             {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

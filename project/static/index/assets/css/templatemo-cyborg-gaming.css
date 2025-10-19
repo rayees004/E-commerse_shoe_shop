@@ -91,7 +91,7 @@ a {
   text-decoration: none !important;
 }
 a:hover {
-	color: #F99;
+	color: #fcf4ff;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -128,7 +128,7 @@ body {
 }
 
 body .page-content {
-  margin-top: 110px;
+  margin-top: 10px;
   background-color: #27292a;
   padding: 60px;
   border-radius: 23px;
@@ -381,11 +381,11 @@ Header Style
 }
 
 .header-area .main-nav #search input {
-  background-color: #27292a;
+  background-color: #000000;
   height: 46px;
   border-radius: 23px;
   border: none;
-  color: #666;
+  color: #000000;
   font-size: 14px;
   padding: 0px 15px 0px 45px;
 }

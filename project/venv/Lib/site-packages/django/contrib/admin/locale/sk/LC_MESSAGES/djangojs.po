@@ -3,23 +3,25 @@
 # Translators:
 # Dimitris Glezos <glezos@transifex.com>, 2012
 # Jannis Leidel <jannis@leidel.info>, 2011
-# Juraj Bubniak <translations@jbub.eu>, 2012
+# 18f25ad6fa9930fc67cb11aca9d16a27, 2012
 # Marian Andre <marian@andre.sk>, 2012,2015
 # Martin Kosír, 2011
 # Martin Tóth <ezimir@gmail.com>, 2017
+# Peter Kuma, 2021
 msgid ""
 msgstr ""
 "Project-Id-Version: django\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-17 23:12+0200\n"
-"PO-Revision-Date: 2017-09-23 18:54+0000\n"
-"Last-Translator: Marian Andre <marian@andre.sk>\n"
+"POT-Creation-Date: 2021-01-15 09:00+0100\n"
+"PO-Revision-Date: 2021-07-24 21:14+0000\n"
+"Last-Translator: Peter Kuma\n"
 "Language-Team: Slovak (http://www.transifex.com/django/django/language/sk/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n "
+">= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);\n"
 
 #, javascript-format
 msgid "Available %s"
@@ -77,6 +79,7 @@ msgid_plural "%(sel)s of %(cnt)s selected"
 msgstr[0] "%(sel)s z %(cnt)s vybrané"
 msgstr[1] "%(sel)s z %(cnt)s vybrané"
 msgstr[2] "%(sel)s z %(cnt)s vybraných"
+msgstr[3] "%(sel)s z %(cnt)s vybraných"
 
 msgid ""
 "You have unsaved changes on individual editable fields. If you run an "
@@ -86,43 +89,23 @@ msgstr ""
 "akciu, vaše zmeny budú stratené."
 
 msgid ""
-"You have selected an action, but you haven't saved your changes to "
-"individual fields yet. Please click OK to save. You'll need to re-run the "
+"You have selected an action, but you haven’t saved your changes to "
+"individual fields yet. Please click OK to save. You’ll need to re-run the "
 "action."
 msgstr ""
 "Vybrali ste akciu, ale neuložili ste jednotlivé polia. Prosím, uložte zmeny "
 "kliknutím na OK. Akciu budete musieť vykonať znova."
 
 msgid ""
-"You have selected an action, and you haven't made any changes on individual "
-"fields. You're probably looking for the Go button rather than the Save "
+"You have selected an action, and you haven’t made any changes on individual "
+"fields. You’re probably looking for the Go button rather than the Save "
 "button."
 msgstr ""
 "Vybrali ste akciu, ale neurobili ste žiadne zmeny v jednotlivých poliach. "
-"Pravdepodobne ste chceli použiť tlačidlo vykonať namiesto uložiť."
-
-#, javascript-format
-msgid "Note: You are %s hour ahead of server time."
-msgid_plural "Note: You are %s hours ahead of server time."
-msgstr[0] "Poznámka: Ste %s hodinu pred časom servera."
-msgstr[1] "Poznámka: Ste %s hodiny pred časom servera."
-msgstr[2] "Poznámka: Ste %s hodín pred časom servera."
-
-#, javascript-format
-msgid "Note: You are %s hour behind server time."
-msgid_plural "Note: You are %s hours behind server time."
-msgstr[0] "Poznámka: Ste %s hodinu za časom servera."
-msgstr[1] "Poznámka: Ste %s hodiny za časom servera."
-msgstr[2] "Poznámka: Ste %s hodín za časom servera."
+"Pravdepodobne ste chceli použiť tlačidlo Vykonať namiesto Uložiť."
 
 msgid "Now"
 msgstr "Teraz"
-
-msgid "Choose a Time"
-msgstr "Vybrať Čas"
-
-msgid "Choose a time"
-msgstr "Vybrať čas"
 
 msgid "Midnight"
 msgstr "Polnoc"
@@ -135,6 +118,28 @@ msgstr "Poludnie"
 
 msgid "6 p.m."
 msgstr "18:00"
+
+#, javascript-format
+msgid "Note: You are %s hour ahead of server time."
+msgid_plural "Note: You are %s hours ahead of server time."
+msgstr[0] "Poznámka: Ste %s hodinu pred časom servera."
+msgstr[1] "Poznámka: Ste %s hodiny pred časom servera."
+msgstr[2] "Poznámka: Ste %s hodín pred časom servera."
+msgstr[3] "Poznámka: Ste %s hodín pred časom servera."
+
+#, javascript-format
+msgid "Note: You are %s hour behind server time."
+msgid_plural "Note: You are %s hours behind server time."
+msgstr[0] "Poznámka: Ste %s hodinu za časom servera."
+msgstr[1] "Poznámka: Ste %s hodiny za časom servera."
+msgstr[2] "Poznámka: Ste %s hodín za časom servera."
+msgstr[3] "Poznámka: Ste %s hodín za časom servera."
+
+msgid "Choose a Time"
+msgstr "Vybrať Čas"
+
+msgid "Choose a time"
+msgstr "Vybrať čas"
 
 msgid "Cancel"
 msgstr "Zrušiť"
@@ -186,6 +191,54 @@ msgstr "november"
 
 msgid "December"
 msgstr "december"
+
+msgctxt "abbrev. month January"
+msgid "Jan"
+msgstr "jan."
+
+msgctxt "abbrev. month February"
+msgid "Feb"
+msgstr "feb."
+
+msgctxt "abbrev. month March"
+msgid "Mar"
+msgstr "mar."
+
+msgctxt "abbrev. month April"
+msgid "Apr"
+msgstr "apr."
+
+msgctxt "abbrev. month May"
+msgid "May"
+msgstr "máj"
+
+msgctxt "abbrev. month June"
+msgid "Jun"
+msgstr "jún"
+
+msgctxt "abbrev. month July"
+msgid "Jul"
+msgstr "júl"
+
+msgctxt "abbrev. month August"
+msgid "Aug"
+msgstr "aug."
+
+msgctxt "abbrev. month September"
+msgid "Sep"
+msgstr "sep."
+
+msgctxt "abbrev. month October"
+msgid "Oct"
+msgstr "okt."
+
+msgctxt "abbrev. month November"
+msgid "Nov"
+msgstr "nov."
+
+msgctxt "abbrev. month December"
+msgid "Dec"
+msgstr "dec."
 
 msgctxt "one letter Sunday"
 msgid "S"

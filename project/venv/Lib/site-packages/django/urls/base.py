@@ -1,21 +1,21 @@
-from threading import local
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import unquote, urlsplit, urlunsplit
 
-from django.utils.encoding import iri_to_uri
+from asgiref.local import Local
+
 from django.utils.functional import lazy
 from django.utils.translation import override
 
 from .exceptions import NoReverseMatch, Resolver404
-from .resolvers import get_ns_resolver, get_resolver
+from .resolvers import _get_cached_resolver, get_ns_resolver, get_resolver
 from .utils import get_callable
 
 # SCRIPT_NAME prefixes for each thread are stored here. If there's no entry for
 # the current thread (which is the only one we ever access), it is assumed to
 # be empty.
-_prefixes = local()
+_prefixes = Local()
 
 # Overridden URLconfs for each thread are stored here.
-_urlconfs = local()
+_urlconfs = Local()
 
 
 def resolve(path, urlconf=None):
@@ -36,22 +36,18 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, current_app=None):
     if not isinstance(viewname, str):
         view = viewname
     else:
-        parts = viewname.split(':')
-        parts.reverse()
-        view = parts[0]
-        path = parts[1:]
+        *path, view = viewname.split(":")
 
         if current_app:
-            current_path = current_app.split(':')
+            current_path = current_app.split(":")
             current_path.reverse()
         else:
             current_path = None
 
         resolved_path = []
-        ns_pattern = ''
+        ns_pattern = ""
         ns_converters = {}
-        while path:
-            ns = path.pop()
+        for ns in path:
             current_ns = current_path.pop() if current_path else None
             # Lookup the name to see if it could be an app identifier.
             try:
@@ -74,20 +70,22 @@ def reverse(viewname, urlconf=None, args=None, kwargs=None, current_app=None):
             try:
                 extra, resolver = resolver.namespace_dict[ns]
                 resolved_path.append(ns)
-                ns_pattern = ns_pattern + extra
+                ns_pattern += extra
                 ns_converters.update(resolver.pattern.converters)
             except KeyError as key:
                 if resolved_path:
                     raise NoReverseMatch(
-                        "%s is not a registered namespace inside '%s'" %
-                        (key, ':'.join(resolved_path))
+                        "%s is not a registered namespace inside '%s'"
+                        % (key, ":".join(resolved_path))
                     )
                 else:
                     raise NoReverseMatch("%s is not a registered namespace" % key)
         if ns_pattern:
-            resolver = get_ns_resolver(ns_pattern, resolver, tuple(ns_converters.items()))
+            resolver = get_ns_resolver(
+                ns_pattern, resolver, tuple(ns_converters.items())
+            )
 
-    return iri_to_uri(resolver._reverse_with_prefix(view, prefix, *args, **kwargs))
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
 
 
 reverse_lazy = lazy(reverse, str)
@@ -95,7 +93,7 @@ reverse_lazy = lazy(reverse, str)
 
 def clear_url_caches():
     get_callable.cache_clear()
-    get_resolver.cache_clear()
+    _get_cached_resolver.cache_clear()
     get_ns_resolver.cache_clear()
 
 
@@ -103,8 +101,8 @@ def set_script_prefix(prefix):
     """
     Set the script prefix for the current thread.
     """
-    if not prefix.endswith('/'):
-        prefix += '/'
+    if not prefix.endswith("/"):
+        prefix += "/"
     _prefixes.value = prefix
 
 
@@ -114,7 +112,7 @@ def get_script_prefix():
     wishes to construct their own URLs manually (although accessing the request
     instance is normally going to be a lot cleaner).
     """
-    return getattr(_prefixes, "value", '/')
+    return getattr(_prefixes, "value", "/")
 
 
 def clear_script_prefix():
@@ -149,13 +147,12 @@ def get_urlconf(default=None):
 
 def is_valid_path(path, urlconf=None):
     """
-    Return True if the given path resolves against the default URL resolver,
-    False otherwise. This is a convenience method to make working with "is
-    this a match?" cases easier, avoiding try...except blocks.
+    Return the ResolverMatch if the given path resolves against the default URL
+    resolver, False otherwise. This is a convenience method to make working
+    with "is this a match?" cases easier, avoiding try...except blocks.
     """
     try:
-        resolve(path, urlconf)
-        return True
+        return resolve(path, urlconf)
     except Resolver404:
         return False
 
@@ -168,16 +165,23 @@ def translate_url(url, lang_code):
     """
     parsed = urlsplit(url)
     try:
-        match = resolve(parsed.path)
+        # URL may be encoded.
+        match = resolve(unquote(parsed.path))
     except Resolver404:
         pass
     else:
-        to_be_reversed = "%s:%s" % (match.namespace, match.url_name) if match.namespace else match.url_name
+        to_be_reversed = (
+            "%s:%s" % (match.namespace, match.url_name)
+            if match.namespace
+            else match.url_name
+        )
         with override(lang_code):
             try:
                 url = reverse(to_be_reversed, args=match.args, kwargs=match.kwargs)
             except NoReverseMatch:
                 pass
             else:
-                url = urlunsplit((parsed.scheme, parsed.netloc, url, parsed.query, parsed.fragment))
+                url = urlunsplit(
+                    (parsed.scheme, parsed.netloc, url, parsed.query, parsed.fragment)
+                )
     return url

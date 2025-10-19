@@ -40,44 +40,56 @@
   </div>
   <!-- ***** Preloader End ***** -->
 
-  <nav><!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+  <!-- ***** Header Area Start ***** -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="/" class="logo">
-                        <img src="{% static 'index/assets/images/logo1.png' %}"  alt="">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Search End ***** -->
-                    <div class="search-input">
-                      <form id="search" action="{% url 'search' %}" method="get" enctype="multipart/form-data">
-
-                        <input type="text" placeholder="Type Something" id='searchText' name="q" onkeypress="handle" />
-                        <i class="fa fa-search"></i>
-                      </form>
-                    </div>
-                    <!-- ***** Search End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="/" class="active">Home</a></li>
-                        <li><a href="#">Register</a></li>
-                        <li><a href="#">Login</a></li>
-                        <li><a href="{% url 'cart_details' %}">My Cart</a></li>
-                        <li><a href="#">Profile <img src="{% static 'index/assets/images/profile-header.jpg' %}" alt=""></a></li>
-                    </ul>
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
-        </div>
+      <a class="navbar-brand" href="/">
+        <img src="{% static 'index/assets/images/logo1.png' %}" alt="" style="height:40px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d-flex mx-auto my-2 position-relative" id="search" action="{% url 'search' %}" method="get" enctype="multipart/form-data">
+          <input class="form-control me-2 rounded-pill bg-dark text-white ps-5" type="search" placeholder="Type Something . . ." aria-label="Search" name="q" id="searchText" style="min-width:200px; border: 2px solid #fff;">
+          <span class="position-absolute" style="left:18px;top:50%;transform:translateY(-50%);color:#fff;pointer-events:none;">
+            <i class="fa fa-search"></i>
+          </span>
+        </form>
+<style>
+  #searchText::placeholder {
+    color: #fff !important;
+    opacity: 1;
+  }
+</style>
+          {% comment %} <button class="btn btn-outline-light rounded-pill" type="submit"><i class="fa fa-search"></i></button> {% endcomment %}
+        </form>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          {% if user != None%}
+            <li class="nav-item"><a class="nav-link menu-text" href="{% url 'home' %}"><u>{{ user.username }}</u></a></li>
+            <li class="nav-item"><a class="nav-link menu-text" href="{% url 'cart_details' %}">My Cart</a></li>
+            <li class="nav-item"><a class="nav-link menu-text" href="{% url 'logout' %}">Logout</a></li>
+            <li class="nav-item"><a class="nav-link menu-text" href="{% url 'order_details' %}">Orders</a></li>
+            <li class="nav-item"><a class="nav-link menu-text" href="#">Profile</a></li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link menu-text" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link menu-text" href="{% url 'register' %}">Register</a></li>
+            <li class="nav-item"><a class="nav-link menu-text" href="{% url 'cart_details' %}">My Cart</a></li>
+            <li class="nav-item"><a class="nav-link menu-text" href="{% url 'login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+      <style>
+        .menu-text {
+          font-family: 'Times New Roman', Times, serif !important;
+          font-weight: bold !important;
+          font-size: 1.2rem !important;
+          color : white !important; 
+        }
+      </style>
     </div>
-  </header><br></nav>
-  <!-- ***** Header Area End ***** -->
+  </nav>
+  <!-- ***** Header Area End ***** --> 
 
  {% block content %}
 

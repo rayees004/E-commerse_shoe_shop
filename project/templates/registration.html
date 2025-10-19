@@ -1,70 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">   
- <style>
-    body{
-        background-image: url(https://static.vecteezy.com/system/resources/previews/000/694/052/original/geometric-seamless-pattern-with-retro-squares-vector.jpg) ;
-    }
-    .body{
-        background-image: url(https://static.vecteezy.com/system/resources/previews/000/694/052/original/geometric-seamless-pattern-with-retro-squares-vector.jpg) ;
-    }
-    .register_body{
-        background: linear-gradient(90deg,rgba(3, 23, 33, 1) 0%, rgb(21, 20, 20) 50%, rgba(255, 255, 255, 1) 100%);
-        
-    }
-    
-.form_body{
-    background: linear-gradient(90deg,rgb(255, 255, 255) 0%, rgb(21, 20, 20) 50%, rgb(0, 0, 0) 100%);
-    color :white;
-}
-.form_card{
-    background: linear-gradient(90deg,rgb(0, 0, 0) 0%, rgb(21, 20, 20) 50%, rgba(255, 255, 255, 1) 100%);
-    color :white;
-}
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="card shadow-lg border-0 overflow-hidden form-card">
+                <div class="row g-0">
+                    <!-- Left image column (hidden on xs, visible from md) -->
+                    <div class="col-md-5 d-none d-md-block " style="background-image: url({% static "index/assets/images/profile.jpg" %}); background-size: cover; background-position: center; ">
+                    </div>
+                    <!-- Form column -->
+                    <div class="col-12 col-md-7 form-col">
+                        <div class="card-body p-4 p-md-5 text-white">
+                            <h2 class="fw-bold mb-3 text-center">Create an account</h2>
+                            <p class="text-muted text-center mb-4">Join us — simple signup to start shopping.</p>
 
- </style>
-    <title >Register</title>
-</head>
-<body>
-    <div class="body container ">
-        <div class="row ">
-            <form action="" method="post" class="form-action">
-                <div class="row mt-md-3">
-                    <div class="col-md-2"></div>
-                    <div class="container card  form_body col-md-8">
-                    <div class="row  card-body ">
-                        <h1 class="register col-12 text-center">Register</h1>
-                        <div class="row ">
-                            <div class="col-1"></div>
-                            <div class="card form_card col-10 ms-3">
-                                <div class="label col-12  mt-3 ">First Name:</div><div class="col-12"><input type="text"name="fname"class="form-control "></div>
-                    <div class="label col-12 ">Last Name:</div><div class="col-12"><input type="text"name="lname"class="form-control "></div>
-                    <div class="label col-12 ">Username:</div><div class="col-12"><input type="text"name="Username"class="form-control "></div>
-                    <div class="label col-12 ">Email:</div><div class="col-12"><input type="email"name="email"class="form-control password"></div>
-                    <div class="label col-12 ">Password:</div><div class="col-12"><input type="password" name="password"class="form-control"></div>
-                    <div class="label col-12 ">Confirm Password:</div><div class="col-12"><input type="password"name="confirmpassword"class="form-control "></div>
-                    <div class="row">
-                        <div class="col-4"></div>
-                    <input type="submit" class="btn btn-dark container p-2 mt-4 col-4" value="Register">
-                    <div class="col-4"></div>
-                    </div><br>
-                            </div>
-                            <div class="col-1"></div><br><br>
+                            <form action="{% url 'register' %}" method="post" novalidate>
+                                {% csrf_token %}
+                                <div class="row g-3">
+                                    <div class="col-12 col-md-6">
+                                        <label for="fname" class="form-label">First name</label>
+                                        <input id="fname" name="fname" type="text" class="form-control" placeholder="John" required>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label for="lname" class="form-label">Last name</label>
+                                        <input id="lname" name="lname" type="text" class="form-control" placeholder="Doe" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="uname" class="form-label">Username</label>
+                                        <input id="uname" name="uname" type="text" class="form-control" placeholder="yourusername" required>
+                                        {% if v_uname == False %}<div class="form-text text-danger">Username already taken</div>{% endif %}
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Email address</label>
+                                        <input id="email" name="email" type="email" class="form-control" placeholder="you@example.com" required>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label for="password1" class="form-label">Password</label>
+                                        <input id="password1" name="password1" type="password" class="form-control" placeholder="Create a password" required>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <label for="password2" class="form-label">Confirm password</label>
+                                        <input id="password2" name="password2" type="password" class="form-control" placeholder="Repeat password" required>
+                                        {% if pass == False %}<div class="form-text text-danger">Passwords do not match</div>{% endif %}
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-dark w-100 py-2">Register</button>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <small class="text-muted">Already have an account? <a href="{% url 'login' %}">Sign in</a></small>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
+                    </div>
                 </div>
-                   
-                </div>
-                 <div class="col-md-2"></div>
-            </form>
-            
             </div>
-            
-            
         </div>
-    
-    
-</body>
-</html>
+    </div>
+</div>
+
+<style>
+    /* Gray/black theme for registration page */
+    .form-card { background: linear-gradient(180deg,#0b0f13 0%, #0f1316 100%); }
+    .form-col { background: linear-gradient(180deg,#0f1113 0%, #141619 100%); }
+    .form-card .card-body { color: #fff; }
+
+    .card .form-label { font-weight: 600; color: #e6eef3; }
+    .form-control {
+        background-color: #121316 !important;
+        border: 1px solid rgba(255,255,255,0.06) !important;
+        color: #ffffff !important;
+    }
+    .form-control:focus {
+        box-shadow: 0 0 0 0.15rem rgba(255,255,255,0.03) !important;
+        border-color: rgba(255,255,255,0.12) !important;
+    }
+    .form-control::placeholder { color: #c7cdd1 !important; opacity: 1; }
+
+    .text-muted { color: #9aa4ab !important; }
+    a { color: #8fbfff !important; }
+
+    .btn-dark, .btn-dark:focus, .btn-dark:hover {
+        background-color: #0b1216 !important;
+        border-color: rgba(255,255,255,0.06) !important;
+        color: #fff !important;
+    }
+
+    /* Left image overlay to darken image for contrast */
+    .col-md-5.bg-light {
+        position: relative;
+    }
+    .col-md-5.bg-light::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: rgba(67, 133, 199, 0.45);
+      }
+
+    @media (max-width: 767.98px) {
+        .card { border-radius: 0.75rem; }
+    }
+</style>
+
+{% endblock %}

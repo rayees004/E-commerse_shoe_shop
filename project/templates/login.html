@@ -1,58 +1,98 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">   
- <style>
-    body{
-        background-image: url(https://static.vecteezy.com/system/resources/previews/000/694/052/original/geometric-seamless-pattern-with-retro-squares-vector.jpg) ;
-    }
-    .body{
-        background-image: url(https://static.vecteezy.com/system/resources/previews/000/694/052/original/geometric-seamless-pattern-with-retro-squares-vector.jpg) ;
-    }
-    .register_body{
-        background: linear-gradient(90deg,rgba(3, 23, 33, 1) 0%, rgb(21, 20, 20) 50%, rgba(255, 255, 255, 1) 100%);
-        
-    }
-    
-.form_body{
-    background: linear-gradient(90deg,rgb(255, 255, 255) 0%, rgb(21, 20, 20) 50%, rgb(0, 0, 0) 100%);
-    color :white;
-    
-}
-.login_body{
-    background: linear-gradient(90deg,rgb(0, 0, 0) 0%, rgb(21, 20, 20) 50%, rgb(255, 254, 254) 100%);
-    color :rgb(255, 252, 252);
-}
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
 
- </style>
-    <title >Login</title>
-</head>
-<body>
-    <div class="body container ">
-        
-            <form action="" method="post" class="form-action">
-                <div class="row mt-md-4">
-                    <div class="col-md-3"></div>
-                    <div class="container card  form_body col-md-6">
-                    <div class="card-title mt-5 text-center "><h1>login</h1></div>
-                    <div class="row">
-                        <div class="col-1"></div>
-                    <div class="row-md  card login_body col-10 p-4 m">
-                    <div class="label col-12 mt-5">Username:</div><div class="col-12 col-md-12"><input type="text"name="Username"class="form-control col-md-6"></div>
-                    <div class="label  col-12 mt-5">Password:</div><div class="col-12 col-md-12"><input type="password"name="password"class="form-control col-md-6"></div>
-                    <input type="submit" class="btn btn-dark container p-2 col-4 mt-5" value="Login">
-                    </div>
-                    <div class="col-1"></div>
-                    </div><br><br><br>
+<div class="container py-5">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="card bg-dark text-light border-0 shadow-lg">
+        <div class="row g-0">
+          <!-- Left blank / decorative column visible on md+ -->
+          <div class="col-md-5 d-none d-md-block bg-left-panel"></div>
+
+          <!-- Form column -->
+          <div class="col-12 col-md-7">
+            <div class="card-body p-4 p-md-5">
+              <h2 class="h4 fw-bold mb-3 text-center">Sign in</h2>
+              <p class="text-light text-center mb-3 small">Welcome back — sign in to continue.</p>
+
+              <form action="" method="post" class="mt-3">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="username" class="form-label small">Username</label>
+                  <input id="username" name="username" type="text" class="form-control form-control-dark" placeholder="yourusername" required>
                 </div>
-                    <div class="col-md-3"></div>
+
+                <div class="mb-3">
+                  <label for="password" class="form-label small">Password</label>
+                  <input id="password" name="password" type="password" class="form-control form-control-dark" placeholder="Password" required>
                 </div>
-            </form>
-            
-        </div>
-    
-    
-</body>
-</html>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  
+                  <a href="#" class="link-light small">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-dark w-100 py-2">Login</button>
+              </form>
+            </div>
+          </div>
+        </div> <!-- row g-0 -->
+      </div> <!-- card -->
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Left panel: dark background and subtle texture; visible only on md+ */
+  .bg-left-panel{
+    min-height: 320px;
+    background-color: #0b0f13;
+    background-image:
+      linear-gradient(180deg, rgba(11,15,19,0.55), rgba(15,20,25,0.55)),
+      url('{% static "index/assets/images/profile.jpg" %}');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Card body & controls dark theme */
+  .card .card-body {
+    background: linear-gradient(180deg,#0b0f13 0%, #0f1316 100%);
+    color: #e6eef3;
+  }
+
+  .form-control-dark {
+    background-color: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: #fff;
+    transition: box-shadow .18s ease, border-color .12s ease, transform .12s ease;
+  }
+  .form-control-dark::placeholder { color: #9aa4ab; opacity: 1; }
+  .form-control-dark:focus {
+    box-shadow: 0 8px 22px rgba(8,12,16,0.6);
+    border-color: rgba(143,191,255,0.16);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .btn-dark {
+    background-color: #0b1216;
+    border-color: rgba(255,255,255,0.06);
+    color: #fff;
+  }
+
+  .link-light { color: #bcd9ff; }
+
+  /* Responsiveness tweaks */
+  @media (max-width: 767.98px) {
+    .bg-left-panel { display: none !important; }
+    .card { border-radius: .65rem; }
+  }
+
+  /* Small accessibility focus for keyboard users */
+  .form-control-dark:focus-visible {
+    box-shadow: 0 0 0 3px rgba(143,191,255,0.06);
+  }
+</style>
+
+{% endblock %}

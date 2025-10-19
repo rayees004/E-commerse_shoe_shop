@@ -1,0 +1,38 @@
+User 
+	fname
+	lname
+	username
+	email
+	password
+Address
+	User forignkey
+	name
+	contact
+	address
+	pincode
+	state
+	district
+	place
+	landmark
+	payment_type
+Cart
+	cart_id
+	daate_added
+Item
+	PRODUCT forignkey
+	Cart forignkey
+	quantity
+	active
+Category 
+	name
+	slug
+Product
+	category foreginkey
+	name
+	slug
+	img
+	desc
+	available
+	price
+	
+	
